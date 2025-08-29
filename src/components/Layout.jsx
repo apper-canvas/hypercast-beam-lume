@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
+import TripPlannerModal from "@/components/organisms/TripPlannerModal";
 import { cn } from "@/utils/cn";
 
 const Layout = () => {
@@ -27,7 +28,12 @@ const Layout = () => {
       icon: "Settings",
       description: "Preferences and configuration"
     }
-  ];
+];
+
+  const [isTripPlannerOpen, setIsTripPlannerOpen] = useState(false);
+
+const openTripPlanner = () => setIsTripPlannerOpen(true);
+  const closeTripPlanner = () => setIsTripPlannerOpen(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -92,9 +98,21 @@ const Layout = () => {
                       <div className="font-medium">{item.name}</div>
                       <div className="text-xs opacity-75">{item.description}</div>
                     </div>
-                  </NavLink>
+</NavLink>
                 ))}
               </nav>
+              
+              {/* Trip Planner Button */}
+              <div className="mt-4 pt-4 border-t border-slate-200">
+                <Button
+                  onClick={openTripPlanner}
+                  className="w-full justify-start"
+                  variant="ghost"
+                  icon="MapPin"
+                >
+                  Plan Trip
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -134,9 +152,20 @@ const Layout = () => {
                     <div className="text-xs opacity-75">{item.description}</div>
                   </div>
                 </NavLink>
-              ))}
+))}
             </nav>
-
+            
+            {/* Trip Planner Button - Mobile */}
+            <div className="mt-4 pt-4 border-t border-slate-200">
+              <Button
+                onClick={openTripPlanner}
+                className="w-full justify-start"
+                variant="ghost"
+                icon="MapPin"
+              >
+                Plan Trip
+              </Button>
+            </div>
             {/* Weather Status Widget */}
             <div className="mt-8 glass-card p-4 rounded-xl">
               <h3 className="font-semibold text-slate-900 mb-2 flex items-center gap-2">
@@ -175,7 +204,13 @@ const Layout = () => {
           <div className="min-h-screen">
             <Outlet />
           </div>
-        </div>
+</div>
+        
+        {/* Trip Planner Modal */}
+        <TripPlannerModal 
+          isOpen={isTripPlannerOpen} 
+          onClose={closeTripPlanner} 
+        />
       </div>
     </div>
   );
