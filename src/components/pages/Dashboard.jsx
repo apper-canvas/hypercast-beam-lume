@@ -7,9 +7,9 @@ import ForecastSection from "@/components/organisms/ForecastSection";
 import CurrentWeatherCard from "@/components/organisms/CurrentWeatherCard";
 import AIInsightsCard from "@/components/organisms/AIInsightsCard";
 import WeatherAlertsSection from "@/components/organisms/WeatherAlertsSection";
+import WeatherWidgetPreview from "@/components/organisms/WeatherWidgetPreview";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
-
 const Dashboard = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
@@ -76,12 +76,23 @@ const Dashboard = () => {
                     <p className="text-lg text-slate-600">AI-powered hyperlocal weather intelligence
                                     </p>
                 </div>
-                {/* Location Selector */}
+{/* Location Selector */}
                 <div className="max-w-2xl mx-auto">
                     <LocationSelector
                         onLocationSelect={handleLocationSelect}
                         selectedLocation={selectedLocation} />
                 </div>
+                
+                {/* Weather Widget Preview */}
+                {weatherData && selectedLocation && (
+                    <div className="mb-8">
+                        <WeatherWidgetPreview 
+                            weatherData={weatherData} 
+                            location={selectedLocation}
+                        />
+                    </div>
+                )}
+                
                 {/* Weather Alerts - Priority Display */}
                 {alerts && alerts.length > 0 && <div className="mb-6">
                     <WeatherAlertsSection alerts={alerts} />
