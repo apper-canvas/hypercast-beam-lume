@@ -1,4 +1,5 @@
 import locationsData from "@/services/mockData/locations.json";
+import { offlineCache } from "@/services/offlineCache";
 
 class LocationService {
   constructor() {
