@@ -1,0 +1,74 @@
+@import 'react-toastify/dist/ReactToastify.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased bg-slate-50 text-slate-900;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  
+  .weather-gradient-sunny {
+    background: linear-gradient(135deg, #FFD54F 0%, #FFA726 50%, #FF8A65 100%);
+  }
+  
+  .weather-gradient-cloudy {
+    background: linear-gradient(135deg, #90A4AE 0%, #607D8B 50%, #455A64 100%);
+  }
+  
+  .weather-gradient-rainy {
+    background: linear-gradient(135deg, #42A5F5 0%, #1976D2 50%, #0D47A1 100%);
+  }
+  
+  .weather-gradient-snowy {
+    background: linear-gradient(135deg, #E8EAF6 0%, #C5CAE9 50%, #9FA8DA 100%);
+  }
+  
+  .weather-gradient-stormy {
+    background: linear-gradient(135deg, #455A64 0%, #263238 50%, #37474F 100%);
+  }
+  
+  .weather-gradient-clear-night {
+    background: linear-gradient(135deg, #1A237E 0%, #283593 50%, #3F51B5 100%);
+  }
+}
+
+/* Toast Customization */
+.Toastify__toast {
+  @apply rounded-lg shadow-lg border border-white/20;
+  backdrop-filter: blur(10px);
+}
+
+.Toastify__toast--success {
+  @apply bg-success-50/90 text-success-900 border-success-200/30;
+}
+
+.Toastify__toast--error {
+  @apply bg-error-50/90 text-error-900 border-error-200/30;
+}
+
+.Toastify__toast--warning {
+  @apply bg-warning-50/90 text-warning-900 border-warning-200/30;
+}
+
+.Toastify__toast--info {
+  @apply bg-primary-50/90 text-primary-900 border-primary-200/30;
+}
+
+.Toastify__toast-container {
+  @apply text-sm;
+}
+
+.Toastify__close-button {
+  @apply text-current opacity-70 hover:opacity-100;
+}

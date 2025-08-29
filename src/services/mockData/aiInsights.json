@@ -1,0 +1,66 @@
+[
+  {
+    "Id": 1,
+    "locationId": "1",
+    "summary": "Perfect spring day ahead! Comfortable temperatures with partly cloudy skies make this ideal for outdoor activities. Light winds and low precipitation chances mean you can confidently plan that picnic or outdoor workout.",
+    "confidence": 92,
+    "todayOutlook": "Expect a delightful day with temperatures climbing to a comfortable 78°F. Morning clouds will give way to more sunshine by afternoon, creating perfect conditions for outdoor activities.",
+    "next48Hours": "Weather remains stable through tomorrow with only minor temperature fluctuations. A slight chance of evening showers tomorrow, but nothing that should disrupt your plans significantly.",
+    "tenDayTrend": "Classic spring pattern emerging with gradually warming temperatures and typical afternoon cloud development. Weekend looks particularly nice with sunny skies and mild conditions.",
+    "recommendations": [
+      {
+        "type": "clothing",
+        "title": "Light Layers",
+        "description": "T-shirt with light jacket for morning"
+      },
+      {
+        "type": "commute",
+        "title": "Walk or Bike",
+        "description": "Perfect weather for active commuting"
+      },
+      {
+        "type": "activity",
+        "title": "Outdoor Plans",
+        "description": "Great day for picnics or outdoor sports"
+      },
+      {
+        "type": "health",
+        "title": "UV Protection",
+        "description": "Use SPF 30+ sunscreen during peak hours"
+      }
+    ],
+    "generatedAt": "2024-03-20T12:00:00Z"
+  },
+  {
+    "Id": 2,
+    "locationId": "2",
+    "summary": "Hot and sunny California weather continues! High UV levels and warm temperatures make this a classic LA day. Stay hydrated and seek shade during peak afternoon hours for optimal comfort.",
+    "confidence": 95,
+    "todayOutlook": "Blazing sunshine with temperatures reaching 88°F. Clear skies and light winds create textbook Southern California weather. Perfect for beach activities but remember sun protection.",
+    "next48Hours": "Heat continues to build with tomorrow potentially reaching 90°F. Consistently sunny skies with minimal cloud cover. Excellent conditions for all outdoor activities with proper sun precautions.",
+    "tenDayTrend": "Extended period of warm, dry weather typical for the season. Weekend temperatures may climb even higher, making it ideal beach and pool weather with appropriate heat management strategies.",
+    "recommendations": [
+      {
+        "type": "clothing",
+        "title": "Light & Breathable",
+        "description": "Cotton or linen fabrics recommended"
+      },
+      {
+        "type": "health",
+        "title": "Sun Protection",
+        "description": "SPF 50+ and wide-brimmed hat essential"
+      },
+      {
+        "type": "activity",
+        "title": "Early Morning Exercise",
+        "description": "Avoid midday heat, exercise before 10 AM"
+      },
+      {
+        "type": "outdoor",
+        "title": "Beach Day",
+        "description": "Perfect conditions for beach activities"
+      }
+    ],
+    "generatedAt": "2024-03-20T12:00:00Z"
+  }
+]

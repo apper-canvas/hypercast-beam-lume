@@ -1,0 +1,21 @@
+[
+  {
+    "Id": 1,
+    "units": "fahrenheit",
+    "notifications": {
+      "rainAlerts": true,
+      "temperatureAlerts": true,
+      "severeWeather": true,
+      "airQualityAlerts": false,
+      "uvAlerts": true,
+      "dailySummary": true
+    },
+    "lowDataMode": false,
+    "accessibility": {
+      "reducedMotion": false,
+      "highContrast": false,
+      "largeText": false
+    },
+    "refreshInterval": 15
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "Id": 1,
+    "locationId": "1",
+    "title": "Severe Thunderstorm Watch",
+    "description": "Conditions are favorable for the development of severe thunderstorms with damaging winds and large hail.",
+    "severity": "severe",
+    "startTime": "2024-03-20T18:00:00Z",
+    "endTime": "2024-03-21T02:00:00Z",
+    "area": "New York Metropolitan Area",
+    "instructions": "Stay indoors during thunderstorms. Avoid windows and seek shelter in interior rooms. Do not use electrical appliances. If driving, pull over safely and wait for storms to pass. Monitor local weather conditions closely."
+  },
+  {
+    "Id": 2,
+    "locationId": "3",
+    "title": "Winter Storm Warning",
+    "description": "Heavy snow and blowing wind will create dangerous travel conditions with accumulations of 8-12 inches expected.",
+    "severity": "extreme",
+    "startTime": "2024-03-20T20:00:00Z",
+    "endTime": "2024-03-21T14:00:00Z",
+    "area": "Chicago and Cook County",
+    "instructions": "Avoid all non-essential travel. If you must travel, carry emergency supplies including water, food, blankets, and a flashlight. Keep vehicle gas tank full. Stay warm and check on elderly neighbors. Clear snow from vehicle exhaust pipe if stranded."
+  },
+  {
+    "Id": 3,
+    "locationId": "4",
+    "title": "Heat Advisory",
+    "description": "Dangerous heat index values up to 110°F expected due to high temperatures and humidity.",
+    "severity": "moderate",
+    "startTime": "2024-03-20T10:00:00Z",
+    "endTime": "2024-03-20T20:00:00Z",
+    "area": "Miami-Dade County",
+    "instructions": "Limit outdoor activities during peak heat hours (10 AM - 6 PM). Drink plenty of water and take frequent breaks in air conditioning. Wear light-colored, loose-fitting clothing. Never leave children or pets in vehicles. Check on elderly relatives and neighbors."
+  }
+]

@@ -1,0 +1,179 @@
+[
+  {
+    "Id": 1,
+    "locationId": "1",
+    "current": {
+      "temperature": 72,
+      "feelsLike": 75,
+      "humidity": 65,
+      "windSpeed": 8,
+      "windDirection": "SW",
+      "visibility": 10,
+      "pressure": 1013,
+      "condition": "partly-cloudy",
+      "description": "Partly Cloudy",
+      "precipitationChance": 15,
+      "uvIndex": 6,
+      "highToday": 78,
+      "lowToday": 62,
+      "sunrise": "2024-03-20T06:30:00Z",
+      "sunset": "2024-03-20T18:45:00Z",
+      "airQuality": {
+        "aqi": 45,
+        "pm25": 12,
+        "ozone": 85
+      },
+      "pollen": {
+        "overall": "Moderate",
+        "tree": 3,
+        "grass": 2,
+        "weed": 1
+      }
+    },
+    "hourly": [
+      {
+        "time": "2024-03-20T12:00:00Z",
+        "temperature": 72,
+        "condition": "partly-cloudy",
+        "precipitationChance": 15,
+        "windSpeed": 8
+      },
+      {
+        "time": "2024-03-20T13:00:00Z",
+        "temperature": 74,
+        "condition": "sunny",
+        "precipitationChance": 10,
+        "windSpeed": 9
+      },
+      {
+        "time": "2024-03-20T14:00:00Z",
+        "temperature": 76,
+        "condition": "sunny",
+        "precipitationChance": 5,
+        "windSpeed": 10
+      },
+      {
+        "time": "2024-03-20T15:00:00Z",
+        "temperature": 78,
+        "condition": "partly-cloudy",
+        "precipitationChance": 20,
+        "windSpeed": 11
+      },
+      {
+        "time": "2024-03-20T16:00:00Z",
+        "temperature": 76,
+        "condition": "cloudy",
+        "precipitationChance": 35,
+        "windSpeed": 12
+      }
+    ],
+    "daily": [
+      {
+        "date": "2024-03-20",
+        "high": 78,
+        "low": 62,
+        "condition": "partly-cloudy",
+        "summary": "Partly cloudy with mild temperatures",
+        "precipitationChance": 25,
+        "windSpeed": 10
+      },
+      {
+        "date": "2024-03-21",
+        "high": 75,
+        "low": 58,
+        "condition": "rainy",
+        "summary": "Light rain expected",
+        "precipitationChance": 80,
+        "windSpeed": 15
+      },
+      {
+        "date": "2024-03-22",
+        "high": 70,
+        "low": 55,
+        "condition": "cloudy",
+        "summary": "Overcast skies",
+        "precipitationChance": 45,
+        "windSpeed": 8
+      }
+    ],
+    "alerts": [],
+    "lastUpdated": "2024-03-20T12:00:00Z"
+  },
+  {
+    "Id": 2,
+    "locationId": "2",
+    "current": {
+      "temperature": 85,
+      "feelsLike": 88,
+      "humidity": 45,
+      "windSpeed": 5,
+      "windDirection": "W",
+      "visibility": 15,
+      "pressure": 1015,
+      "condition": "sunny",
+      "description": "Sunny",
+      "precipitationChance": 5,
+      "uvIndex": 9,
+      "highToday": 88,
+      "lowToday": 68,
+      "sunrise": "2024-03-20T07:00:00Z",
+      "sunset": "2024-03-20T19:15:00Z",
+      "airQuality": {
+        "aqi": 78,
+        "pm25": 25,
+        "ozone": 120
+      },
+      "pollen": {
+        "overall": "High",
+        "tree": 4,
+        "grass": 3,
+        "weed": 2
+      }
+    },
+    "hourly": [
+      {
+        "time": "2024-03-20T12:00:00Z",
+        "temperature": 85,
+        "condition": "sunny",
+        "precipitationChance": 0,
+        "windSpeed": 5
+      },
+      {
+        "time": "2024-03-20T13:00:00Z",
+        "temperature": 87,
+        "condition": "sunny",
+        "precipitationChance": 0,
+        "windSpeed": 6
+      },
+      {
+        "time": "2024-03-20T14:00:00Z",
+        "temperature": 88,
+        "condition": "sunny",
+        "precipitationChance": 5,
+        "windSpeed": 7
+      }
+    ],
+    "daily": [
+      {
+        "date": "2024-03-20",
+        "high": 88,
+        "low": 68,
+        "condition": "sunny",
+        "summary": "Sunny and warm",
+        "precipitationChance": 10,
+        "windSpeed": 6
+      },
+      {
+        "date": "2024-03-21",
+        "high": 90,
+        "low": 70,
+        "condition": "sunny",
+        "summary": "Hot and sunny",
+        "precipitationChance": 5,
+        "windSpeed": 8
+      }
+    ],
+    "alerts": [],
+    "lastUpdated": "2024-03-20T12:00:00Z"
+  }
+]

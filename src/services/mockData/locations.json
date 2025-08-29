@@ -1,0 +1,122 @@
+[
+  {
+    "Id": 1,
+    "name": "New York, NY",
+    "region": "New York",
+    "country": "United States",
+    "coordinates": {
+      "lat": 40.7128,
+      "lng": -74.0060
+    },
+    "timezone": "America/New_York",
+    "isFavorite": true
+  },
+  {
+    "Id": 2,
+    "name": "Los Angeles, CA",
+    "region": "California",
+    "country": "United States",
+    "coordinates": {
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "timezone": "America/Los_Angeles",
+    "isFavorite": true
+  },
+  {
+    "Id": 3,
+    "name": "Chicago, IL",
+    "region": "Illinois",
+    "country": "United States",
+    "coordinates": {
+      "lat": 41.8781,
+      "lng": -87.6298
+    },
+    "timezone": "America/Chicago",
+    "isFavorite": false
+  },
+  {
+    "Id": 4,
+    "name": "Miami, FL",
+    "region": "Florida",
+    "country": "United States",
+    "coordinates": {
+      "lat": 25.7617,
+      "lng": -80.1918
+    },
+    "timezone": "America/New_York",
+    "isFavorite": true
+  },
+  {
+    "Id": 5,
+    "name": "Seattle, WA",
+    "region": "Washington",
+    "country": "United States",
+    "coordinates": {
+      "lat": 47.6062,
+      "lng": -122.3321
+    },
+    "timezone": "America/Los_Angeles",
+    "isFavorite": false
+  },
+  {
+    "Id": 6,
+    "name": "Denver, CO",
+    "region": "Colorado",
+    "country": "United States",
+    "coordinates": {
+      "lat": 39.7392,
+      "lng": -104.9903
+    },
+    "timezone": "America/Denver",
+    "isFavorite": false
+  },
+  {
+    "Id": 7,
+    "name": "London",
+    "region": "England",
+    "country": "United Kingdom",
+    "coordinates": {
+      "lat": 51.5074,
+      "lng": -0.1278
+    },
+    "timezone": "Europe/London",
+    "isFavorite": false
+  },
+  {
+    "Id": 8,
+    "name": "Paris",
+    "region": "Île-de-France",
+    "country": "France",
+    "coordinates": {
+      "lat": 48.8566,
+      "lng": 2.3522
+    },
+    "timezone": "Europe/Paris",
+    "isFavorite": false
+  },
+  {
+    "Id": 9,
+    "name": "Tokyo",
+    "region": "Kanto",
+    "country": "Japan",
+    "coordinates": {
+      "lat": 35.6762,
+      "lng": 139.6503
+    },
+    "timezone": "Asia/Tokyo",
+    "isFavorite": false
+  },
+  {
+    "Id": 10,
+    "name": "Sydney",
+    "region": "New South Wales",
+    "country": "Australia",
+    "coordinates": {
+      "lat": -33.8688,
+      "lng": 151.2093
+    },
+    "timezone": "Australia/Sydney",
+    "isFavorite": false
+  }
+]
