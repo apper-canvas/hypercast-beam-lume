@@ -79,17 +79,21 @@ class WeatherService {
         lowToday: Math.round(baseTemp - 10),
         sunrise: "2024-03-20T06:30:00Z",
         sunset: "2024-03-20T18:30:00Z",
-        airQuality: {
+airQuality: {
           aqi: Math.floor(Math.random() * 100) + 20,
           pm25: Math.floor(Math.random() * 30) + 5,
           ozone: Math.floor(Math.random() * 80) + 40
         },
         pollen: {
-          overall: ["Low", "Moderate", "High"][Math.floor(Math.random() * 3)],
-          tree: Math.floor(Math.random() * 5),
-          grass: Math.floor(Math.random() * 5),
-          weed: Math.floor(Math.random() * 5)
-        }
+          overall: ["Low", "Moderate", "High", "Very High"][Math.floor(Math.random() * 4)],
+          tree: Math.floor(Math.random() * 5) + 1,
+          grass: Math.floor(Math.random() * 5) + 1,
+          weed: Math.floor(Math.random() * 5) + 1
+        },
+        healthRecommendations: this.generateHealthRecommendations(
+          Math.floor(Math.random() * 100) + 20,
+          ["Low", "Moderate", "High", "Very High"][Math.floor(Math.random() * 4)]
+        )
       },
       hourly: this.generateHourlyForecast(baseTemp, currentCondition),
       daily: this.generateDailyForecast(baseTemp),
@@ -159,6 +163,37 @@ class WeatherService {
       "Great day to be outside"
     ];
     return summaries[Math.floor(Math.random() * summaries.length)];
+  }
+generateHealthRecommendations(aqi, pollenLevel) {
+    const recommendations = [];
+    
+    // AQI-based recommendations
+    if (aqi <= 50) {
+      recommendations.push("Excellent day for outdoor activities");
+    } else if (aqi <= 100) {
+      recommendations.push("Good day for most outdoor activities");
+      recommendations.push("Sensitive individuals should watch for symptoms");
+    } else if (aqi <= 150) {
+      recommendations.push("Limit prolonged outdoor exertion");
+      recommendations.push("Sensitive groups should avoid outdoor activities");
+    } else if (aqi <= 200) {
+      recommendations.push("Avoid prolonged outdoor activities");
+      recommendations.push("Consider wearing a mask outdoors");
+    } else {
+      recommendations.push("Avoid all outdoor activities");
+      recommendations.push("Stay indoors with air purifier if available");
+    }
+
+    // Pollen-based recommendations
+    if (pollenLevel === "High" || pollenLevel === "Very High") {
+      recommendations.push("Keep windows closed during high pollen times");
+      recommendations.push("Consider taking allergy medication");
+      if (pollenLevel === "Very High") {
+        recommendations.push("Shower and change clothes after being outdoors");
+      }
+    }
+
+    return recommendations.slice(0, 3); // Limit to 3 recommendations
   }
 
   async delay() {

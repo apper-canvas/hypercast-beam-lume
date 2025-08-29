@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "@/components/atoms/Card";
 import WeatherMetric from "@/components/molecules/WeatherMetric";
+import AirQualityGauge from "@/components/molecules/AirQualityGauge";
 import Badge from "@/components/atoms/Badge";
 import ApperIcon from "@/components/ApperIcon";
 import { format } from "date-fns";
@@ -175,31 +176,18 @@ const CurrentWeatherCard = ({ weatherData, location }) => {
           </div>
         </Card>
         
-        <Card className="p-4">
-          <h3 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+<Card className="p-6">
+          <h3 className="font-semibold text-slate-900 mb-4 flex items-center gap-2">
             <ApperIcon name="Leaf" className="h-5 w-5 text-success-500" />
-            Air Quality
+            Air Quality & Pollen
           </h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-600">AQI Level</span>
-              <Badge variant={aqiLevel.color} size="sm">
-                {aqiLevel.level}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-slate-600">PM2.5</span>
-              <span className="font-medium">
-                {weatherData.current.airQuality.pm25} μg/m³
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-slate-600">Ozone</span>
-              <span className="font-medium">
-                {weatherData.current.airQuality.ozone} μg/m³
-              </span>
-            </div>
-          </div>
+          <AirQualityGauge
+            aqi={weatherData.current.airQuality.aqi}
+            pm25={weatherData.current.airQuality.pm25}
+            ozone={weatherData.current.airQuality.ozone}
+            pollen={weatherData.current.pollen}
+            healthRecommendations={weatherData.current.healthRecommendations}
+          />
         </Card>
       </div>
     </div>

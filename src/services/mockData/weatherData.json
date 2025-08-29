@@ -18,7 +18,7 @@
       "lowToday": 62,
       "sunrise": "2024-03-20T06:30:00Z",
       "sunset": "2024-03-20T18:45:00Z",
-      "airQuality": {
+"airQuality": {
         "aqi": 45,
         "pm25": 12,
         "ozone": 85
@@ -28,7 +28,12 @@
         "tree": 3,
         "grass": 2,
         "weed": 1
-      }
+      },
+      "healthRecommendations": [
+        "Good day for outdoor activities",
+        "Sensitive individuals should limit prolonged outdoor exertion",
+        "Consider wearing sunglasses and sunscreen"
+      ]
     },
     "hourly": [
       {
