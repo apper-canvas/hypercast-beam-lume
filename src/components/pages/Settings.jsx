@@ -39,7 +39,7 @@ const Settings = () => {
     }
   };
 
-  const updatePreference = (category, key, value) => {
+const updatePreference = (category, key, value) => {
     setPreferences(prev => ({
       ...prev,
       [category]: {
@@ -50,9 +50,33 @@ const Settings = () => {
   };
 
   const toggleNotification = (key) => {
-    updatePreference("notifications", key, !preferences.notifications[key]);
+    const currentNotification = preferences.notifications[key];
+    if (typeof currentNotification === 'boolean') {
+      updatePreference("notifications", key, !currentNotification);
+    } else {
+      updatePreference("notifications", key, {
+        ...currentNotification,
+        enabled: !currentNotification.enabled
+      });
+    }
   };
 
+  const updateNotificationSetting = (key, setting, value) => {
+    const currentNotification = preferences.notifications[key];
+    updatePreference("notifications", key, {
+      ...currentNotification,
+      [setting]: value
+    });
+  };
+
+  const [expandedNotifications, setExpandedNotifications] = useState({});
+
+  const toggleExpanded = (key) => {
+    setExpandedNotifications(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
   if (loading || !preferences) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
@@ -144,7 +168,7 @@ const Settings = () => {
             </Card>
 
             {/* Notifications */}
-            <Card className="p-6">
+<Card className="p-6">
               <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
                 <ApperIcon name="Bell" className="h-5 w-5 text-accent-500" />
                 Smart Notifications
@@ -152,29 +176,241 @@ const Settings = () => {
               
               <div className="space-y-4">
                 {[
-                  { key: "rainAlerts", label: "Rain Start Alerts", desc: "Get notified when rain is about to start" },
-                  { key: "temperatureAlerts", label: "Temperature Changes", desc: "Alerts for significant temperature drops/rises" },
-                  { key: "severeWeather", label: "Severe Weather", desc: "Critical weather warnings and alerts" },
-                  { key: "airQualityAlerts", label: "Air Quality Changes", desc: "AQI changes affecting health" },
-                  { key: "uvAlerts", label: "UV Index Warnings", desc: "High UV exposure warnings" },
-                  { key: "dailySummary", label: "Daily Summary", desc: "Morning weather summary and recommendations" }
-                ].map((notification) => (
-                  <div key={notification.key} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
-                    <div className="flex-1">
-                      <div className="font-medium text-slate-900">{notification.label}</div>
-                      <div className="text-sm text-slate-600">{notification.desc}</div>
+                  { 
+                    key: "rainAlerts", 
+                    label: "Rain Start Alerts", 
+                    desc: "Get notified when rain is about to start",
+                    icon: "CloudRain",
+                    hasSettings: true
+                  },
+                  { 
+                    key: "temperatureAlerts", 
+                    label: "Temperature Changes", 
+                    desc: "Alerts for significant temperature drops/rises",
+                    icon: "Thermometer",
+                    hasSettings: true
+                  },
+                  { 
+                    key: "severeWeather", 
+                    label: "Severe Weather", 
+                    desc: "Critical weather warnings and alerts",
+                    icon: "Zap",
+                    hasSettings: false
+                  },
+                  { 
+                    key: "airQualityAlerts", 
+                    label: "Air Quality Changes", 
+                    desc: "AQI changes affecting health",
+                    icon: "Wind",
+                    hasSettings: true
+                  },
+                  { 
+                    key: "uvAlerts", 
+                    label: "UV Index Warnings", 
+                    desc: "High UV exposure warnings",
+                    icon: "Sun",
+                    hasSettings: true
+                  },
+                  { 
+                    key: "dailySummary", 
+                    label: "Daily Summary", 
+                    desc: "Morning weather summary and recommendations",
+                    icon: "Calendar",
+                    hasSettings: true
+                  }
+                ].map((notification) => {
+                  const notificationData = preferences.notifications[notification.key];
+                  const isEnabled = typeof notificationData === 'boolean' ? notificationData : notificationData?.enabled;
+                  const isExpanded = expandedNotifications[notification.key];
+                  
+                  return (
+                    <div key={notification.key} className="border border-slate-200 rounded-lg bg-white/50 backdrop-blur-sm overflow-hidden">
+                      <div className="flex items-center justify-between p-4 hover:bg-slate-50/80 transition-colors">
+                        <div className="flex items-center gap-3 flex-1">
+                          <ApperIcon name={notification.icon} className="h-5 w-5 text-slate-600" />
+                          <div className="flex-1">
+                            <div className="font-medium text-slate-900">{notification.label}</div>
+                            <div className="text-sm text-slate-600">{notification.desc}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant={isEnabled ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => toggleNotification(notification.key)}
+                            icon={isEnabled ? "Check" : "X"}
+                          >
+                            {isEnabled ? "On" : "Off"}
+                          </Button>
+                          {notification.hasSettings && isEnabled && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => toggleExpanded(notification.key)}
+                              icon={isExpanded ? "ChevronUp" : "ChevronDown"}
+                            >
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {notification.hasSettings && isEnabled && isExpanded && (
+                        <div className="border-t border-slate-200 p-4 bg-slate-50/50">
+                          {notification.key === "rainAlerts" && (
+                            <div className="space-y-4">
+                              <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                  Alert Timing
+                                </label>
+                                <div className="flex items-center gap-4">
+                                  <input
+                                    type="number"
+                                    min="5"
+                                    max="120"
+                                    value={notificationData?.minutesBefore || 15}
+                                    onChange={(e) => updateNotificationSetting("rainAlerts", "minutesBefore", parseInt(e.target.value))}
+                                    className="w-20 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                  />
+                                  <span className="text-sm text-slate-600">minutes before rain starts</span>
+                                </div>
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                  Rain Probability Threshold
+                                </label>
+                                <div className="flex items-center gap-4">
+                                  <input
+                                    type="range"
+                                    min="30"
+                                    max="90"
+                                    value={notificationData?.probabilityThreshold || 70}
+                                    onChange={(e) => updateNotificationSetting("rainAlerts", "probabilityThreshold", parseInt(e.target.value))}
+                                    className="flex-1"
+                                  />
+                                  <span className="text-sm text-slate-600 w-12">{notificationData?.probabilityThreshold || 70}%</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {notification.key === "temperatureAlerts" && (
+                            <div className="space-y-4">
+                              <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                  Temperature Change Threshold
+                                </label>
+                                <div className="flex items-center gap-4">
+                                  <input
+                                    type="number"
+                                    min="5"
+                                    max="25"
+                                    value={notificationData?.degreeChange || 10}
+                                    onChange={(e) => updateNotificationSetting("temperatureAlerts", "degreeChange", parseInt(e.target.value))}
+                                    className="w-20 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                  />
+                                  <span className="text-sm text-slate-600">°F change to trigger alert</span>
+                                </div>
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                  Alert Types
+                                </label>
+                                <div className="flex gap-4">
+                                  <label className="flex items-center gap-2">
+                                    <input
+                                      type="checkbox"
+                                      checked={notificationData?.alertOnDrop !== false}
+                                      onChange={(e) => updateNotificationSetting("temperatureAlerts", "alertOnDrop", e.target.checked)}
+                                      className="rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                                    />
+                                    <span className="text-sm text-slate-700">Temperature drops</span>
+                                  </label>
+                                  <label className="flex items-center gap-2">
+                                    <input
+                                      type="checkbox"
+                                      checked={notificationData?.alertOnRise !== false}
+                                      onChange={(e) => updateNotificationSetting("temperatureAlerts", "alertOnRise", e.target.checked)}
+                                      className="rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                                    />
+                                    <span className="text-sm text-slate-700">Temperature rises</span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {notification.key === "airQualityAlerts" && (
+                            <div className="space-y-4">
+                              <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                  AQI Alert Threshold
+                                </label>
+                                <div className="flex items-center gap-4">
+                                  <input
+                                    type="range"
+                                    min="50"
+                                    max="200"
+                                    step="10"
+                                    value={notificationData?.aqiThreshold || 100}
+                                    onChange={(e) => updateNotificationSetting("airQualityAlerts", "aqiThreshold", parseInt(e.target.value))}
+                                    className="flex-1"
+                                  />
+                                  <span className="text-sm text-slate-600 w-16">AQI {notificationData?.aqiThreshold || 100}</span>
+                                </div>
+                                <div className="text-xs text-slate-500 mt-1">
+                                  Alert when AQI exceeds this level
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {notification.key === "uvAlerts" && (
+                            <div className="space-y-4">
+                              <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                  UV Index Alert Level
+                                </label>
+                                <div className="flex items-center gap-4">
+                                  <input
+                                    type="range"
+                                    min="3"
+                                    max="11"
+                                    value={notificationData?.uvThreshold || 6}
+                                    onChange={(e) => updateNotificationSetting("uvAlerts", "uvThreshold", parseInt(e.target.value))}
+                                    className="flex-1"
+                                  />
+                                  <span className="text-sm text-slate-600 w-12">UV {notificationData?.uvThreshold || 6}</span>
+                                </div>
+                                <div className="text-xs text-slate-500 mt-1">
+                                  Alert when UV index reaches this level
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {notification.key === "dailySummary" && (
+                            <div className="space-y-4">
+                              <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                  Summary Time
+                                </label>
+                                <div className="flex items-center gap-4">
+                                  <input
+                                    type="time"
+                                    value={notificationData?.time || "07:00"}
+                                    onChange={(e) => updateNotificationSetting("dailySummary", "time", e.target.value)}
+                                    className="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                  />
+                                  <span className="text-sm text-slate-600">Daily summary delivery time</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
-                    <Button
-                      variant={preferences.notifications[notification.key] ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => toggleNotification(notification.key)}
-                      icon={preferences.notifications[notification.key] ? "Check" : "X"}
-                      className="ml-3"
-                    >
-                      {preferences.notifications[notification.key] ? "On" : "Off"}
-                    </Button>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </Card>
 

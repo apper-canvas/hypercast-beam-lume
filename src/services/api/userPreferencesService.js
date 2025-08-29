@@ -10,9 +10,18 @@ class UserPreferencesService {
     return { ...this.preferences };
   }
 
-  async updatePreferences(newPreferences) {
+async updatePreferences(newPreferences) {
     await this.delay();
     this.preferences = { ...this.preferences, ...newPreferences };
+    return { ...this.preferences };
+  }
+
+  async updateNotificationPreference(key, settings) {
+    await this.delay();
+    this.preferences.notifications = {
+      ...this.preferences.notifications,
+      [key]: settings
+    };
     return { ...this.preferences };
   }
 
@@ -22,9 +31,18 @@ class UserPreferencesService {
     return { ...this.preferences };
   }
 
-  async updateNotifications(notifications) {
+async updateNotifications(notifications) {
     await this.delay();
     this.preferences.notifications = { ...this.preferences.notifications, ...notifications };
+    return { ...this.preferences };
+  }
+
+  async updateNotificationSettings(key, settings) {
+    await this.delay();
+    this.preferences.notifications[key] = {
+      ...this.preferences.notifications[key],
+      ...settings
+    };
     return { ...this.preferences };
   }
 

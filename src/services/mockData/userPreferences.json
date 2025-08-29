@@ -1,14 +1,32 @@
 [
   {
     "Id": 1,
-    "units": "fahrenheit",
+"units": "fahrenheit",
     "notifications": {
-      "rainAlerts": true,
-      "temperatureAlerts": true,
+      "rainAlerts": {
+        "enabled": true,
+        "minutesBefore": 15,
+        "probabilityThreshold": 70
+      },
+      "temperatureAlerts": {
+        "enabled": true,
+        "degreeChange": 10,
+        "alertOnDrop": true,
+        "alertOnRise": true
+      },
       "severeWeather": true,
-      "airQualityAlerts": false,
-      "uvAlerts": true,
-      "dailySummary": true
+      "airQualityAlerts": {
+        "enabled": false,
+        "aqiThreshold": 100
+      },
+      "uvAlerts": {
+        "enabled": true,
+        "uvThreshold": 6
+      },
+      "dailySummary": {
+        "enabled": true,
+        "time": "07:00"
+      }
     },
     "lowDataMode": false,
     "accessibility": {
