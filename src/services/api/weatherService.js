@@ -1,88 +1,13 @@
 import weatherData from "@/services/mockData/weatherData.json";
 import alertsData from "@/services/mockData/weatherAlerts.json";
-import { offlineCache } from "@/services/offlineCache";
 
 class WeatherService {
   constructor() {
     this.weatherData = [...weatherData];
     this.alerts = [...alertsData];
-    this.cache = offlineCache;
   }
 
-  async getByLocationIdWithCache(locationId, options = {}) {
-    const { forceRefresh = false, useCache = true } = options;
-    
-    // Check network status
-    const networkStatus = this.cache.getNetworkStatus();
-    const isOnline = this.cache.isOnline;
-
-    // If offline, return cached data
-    if (!isOnline && useCache) {
-      const cached = this.cache.get('weather', locationId);
-      if (cached) {
-        return {
-          ...cached,
-          _offline: true,
-          _networkStatus: networkStatus
-        };
-      }
-      throw new Error('No cached data available for offline access');
-    }
-
-    // If online but not forcing refresh, try cache first
-    if (isOnline && useCache && !forceRefresh) {
-      const cached = this.cache.get('weather', locationId);
-      if (cached) {
-        // Return cached data but trigger background refresh
-        this.refreshInBackground(locationId);
-        return {
-          ...cached,
-          _fromCache: true,
-          _networkStatus: networkStatus
-        };
-      }
-    }
-
-    // Fetch fresh data
-    try {
-      const freshData = await this.getByLocationId(locationId);
-      
-      // Cache the fresh data
-      if (useCache) {
-        this.cache.set('weather', locationId, freshData);
-      }
-      
-      return {
-        ...freshData,
-        _fresh: true,
-        _networkStatus: networkStatus
-      };
-    } catch (error) {
-      // If fetch fails and we have cached data, use it
-      if (useCache) {
-        const cached = this.cache.get('weather', locationId);
-        if (cached) {
-          return {
-            ...cached,
-            _fallbackToCache: true,
-            _error: error.message,
-            _networkStatus: networkStatus
-          };
-        }
-      }
-      throw error;
-    }
-  }
-
-  async refreshInBackground(locationId) {
-    try {
-      const freshData = await this.getByLocationId(locationId);
-      this.cache.set('weather', locationId, freshData);
-    } catch (error) {
-      console.warn(`Background refresh failed for location ${locationId}:`, error);
-    }
-}
-async getByLocationId(locationId) {
+  async getByLocationId(locationId) {
     await this.delay();
     const weather = this.weatherData.find(data => data.locationId === locationId.toString());
     if (!weather) {
@@ -91,27 +16,6 @@ async getByLocationId(locationId) {
       return { ...defaultWeather };
     }
     return { ...weather };
-  }
-
-  // Main method that should be used by components
-  async getWeatherData(locationId, options = {}) {
-    return this.getByLocationIdWithCache(locationId, options);
-  }
-
-  getCachedLocations() {
-    return this.cache.getLocationCache();
-  }
-
-  getCacheInfo() {
-    return this.cache.getCacheInfo();
-  }
-
-  clearCache() {
-    this.cache.clear();
-  }
-
-  isOffline() {
-    return !this.cache.isOnline;
   }
 
   async getAlerts(locationId) {

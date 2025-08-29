@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { weatherService } from "@/services/api/weatherService";
 import { aiInsightsService } from "@/services/api/aiInsightsService";
 import { toast } from "react-toastify";
-import ApperIcon from "@/components/ApperIcon";
 import LocationSelector from "@/components/molecules/LocationSelector";
-import Badge from "@/components/atoms/Badge";
 import ForecastSection from "@/components/organisms/ForecastSection";
-import WeatherWidgetPreview from "@/components/organisms/WeatherWidgetPreview";
 import CurrentWeatherCard from "@/components/organisms/CurrentWeatherCard";
 import AIInsightsCard from "@/components/organisms/AIInsightsCard";
 import WeatherAlertsSection from "@/components/organisms/WeatherAlertsSection";
+import WeatherWidgetPreview from "@/components/organisms/WeatherWidgetPreview";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
 const Dashboard = () => {
@@ -20,22 +18,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-const [isOffline, setIsOffline] = useState(!navigator.onLine);
-  const [dataSource, setDataSource] = useState('loading');
-
-  useEffect(() => {
-    const handleOnline = () => setIsOffline(false);
-    const handleOffline = () => setIsOffline(true);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
-
   useEffect(() => {
     if (selectedLocation) {
       loadWeatherData();
@@ -44,87 +26,32 @@ const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
   const loadWeatherData = async () => {
     if (!selectedLocation) return;
-
+    
     setLoading(true);
-    setError(null);
-    setDataSource('loading');
-
+    setError("");
+    
     try {
-      // Use the caching-enabled weather service method
-      const data = await weatherService.getWeatherData(selectedLocation.Id);
-      setWeatherData(data);
+      const [weather, aiInsights, weatherAlerts] = await Promise.all([
+        weatherService.getByLocationId(selectedLocation.Id),
+        aiInsightsService.generateInsights(selectedLocation.Id),
+        weatherService.getAlerts(selectedLocation.Id)
+      ]);
       
-      // Determine data source for user feedback
-      if (data._offline) {
-        setDataSource('offline');
-        toast.info(`Offline: Showing cached data for ${selectedLocation.name}`, {
-          icon: "📱"
-        });
-      } else if (data._fromCache) {
-        setDataSource('cached');
-        toast.success(`Loaded cached data for ${selectedLocation.name}`, {
-          icon: "⚡"
-        });
-      } else if (data._fallbackToCache) {
-        setDataSource('fallback');
-        toast.warning(`Network issue: Using cached data for ${selectedLocation.name}`, {
-          icon: "⚠️"
-        });
-      } else {
-        setDataSource('live');
-        toast.success(`Weather loaded for ${selectedLocation.name}`);
-      }
-
-// Load AI insights
-      const insights = await aiInsightsService.generateInsights(selectedLocation.Id);
-      setInsights(insights);
-
-    } catch (error) {
-      console.error('Error loading weather data:', error);
-      setError(error.message);
-      setDataSource('error');
+      setWeatherData(weather);
+      setInsights(aiInsights);
+      setAlerts(weatherAlerts);
       
-      if (error.message.includes('No cached data available')) {
-        toast.error(`No offline data available for ${selectedLocation.name}`, {
-          icon: "📵"
-        });
-      } else {
-        toast.error(`Failed to load weather data: ${error.message}`);
-      }
+    } catch (err) {
+      setError("Failed to load weather data. Please try again.");
+      toast.error("Failed to load weather data");
     } finally {
       setLoading(false);
     }
   };
 
-const handleLocationSelect = (location) => {
+  const handleLocationSelect = (location) => {
     setSelectedLocation(location);
-    // Toast will be shown in loadWeatherData based on data source
-  };
-
-  const getDataSourceIndicator = () => {
-    const indicators = {
-      offline: { icon: "WifiOff", text: "Offline", variant: "secondary", color: "text-slate-500" },
-      cached: { icon: "Zap", text: "Cached", variant: "success", color: "text-success-600" },
-      fallback: { icon: "AlertTriangle", text: "Network Issue", variant: "warning", color: "text-warning-600" },
-      live: { icon: "Wifi", text: "Live", variant: "success", color: "text-success-600" },
-      loading: { icon: "Loader2", text: "Loading", variant: "secondary", color: "text-slate-500" }
-    };
-
-    const indicator = indicators[dataSource] || indicators.loading;
-    
-    return (
-      <div className="flex items-center gap-2 text-sm">
-        <ApperIcon name={indicator.icon} className={`h-4 w-4 ${indicator.color}`} />
-        <Badge variant={indicator.variant} size="sm">
-          {indicator.text}
-        </Badge>
-        {weatherData?._cachedAt && (
-          <span className="text-xs text-slate-500">
-            Cached: {new Date(weatherData._cachedAt).toLocaleTimeString()}
-          </span>
-        )}
-</div>
-    );
+    toast.success(`Weather loaded for ${location.name}`);
   };
 
   if (loading) {

@@ -6,28 +6,12 @@ import Error from "@/components/ui/Error";
 import { weatherService } from "@/services/api/weatherService";
 import { locationService } from "@/services/api/locationService";
 import { toast } from "react-toastify";
-import ApperIcon from "@/components/ApperIcon";
-import Badge from "@/components/atoms/Badge";
 
 const Map = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-const [isOffline, setIsOffline] = useState(!navigator.onLine);
-
-  useEffect(() => {
-    const handleOnline = () => setIsOffline(false);
-    const handleOffline = () => setIsOffline(true);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOffline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
 
   useEffect(() => {
     // Try to load default location on mount
@@ -41,23 +25,9 @@ const [isOffline, setIsOffline] = useState(!navigator.onLine);
   }, [selectedLocation]);
 
   const loadDefaultLocation = async () => {
-try {
+    try {
       const locations = await locationService.getAll();
       if (locations.length > 0) {
-        // If offline, try to use a cached location
-        if (isOffline) {
-          const cachedLocations = weatherService.getCachedLocations();
-          if (cachedLocations.length > 0) {
-            const cachedLocation = locations.find(loc => 
-              loc.Id.toString() === cachedLocations[0].identifier
-            );
-            if (cachedLocation) {
-              setSelectedLocation(cachedLocation);
-              toast.info("Offline: Using cached location data", { icon: "📱" });
-              return;
-            }
-          }
-        }
         setSelectedLocation(locations[0]);
       }
     } catch (err) {
